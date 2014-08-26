@@ -1,0 +1,57 @@
+<h1>Things To Do</h1>
+<div class="media">
+  <div class="media-body">
+    <table class="table table-hover">
+      <thead>
+	<tr>
+	  <th>Todos</th>
+	  <th>Completed?</th>
+	  <th colspan="3"></th>
+	</tr>
+      </thead>
+
+      <tbody>
+	<% @tasks.each do |task| %>
+	<tr>
+	  <% if task.completed === false %>
+          <td><%= task.name %></td>
+          <td><%= link_to 'Mark as Done', edit_task_path(task), data: { confirm: 'Finished this To Do?' }, class: 'btn btn-success' %></td>
+          <td><%= link_to 'Show', task, class: 'btn btn-mini' %></td>
+	  <% if can? :edit, task %>
+          <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-mini' %></td>
+	  <% end %>
+          <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'But you didn't finish. Are you sure?' }, class: 'btn btn-mini' %></td>
+	</tr>
+	<% end %>
+	<% end %>
+      </tbody>
+    </table>
+    <%= link_to 'New Task', new_task_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+<br>
+<div class="media">
+  <div class="media-body">
+    <table class="table table-hover">
+      <thead>
+	<tr>
+	  <th>Completed todos</th>
+	  <th colspan="3"></th>
+	</tr>
+      </thead>
+
+      <tbody>
+	<% @tasks.each do |task| %>
+	<tr>
+	  <% if task.completed === true %>
+          <td><%= task.name %></td>
+          <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini' %></td>
+	</tr>
+	<% end %>
+	<% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
